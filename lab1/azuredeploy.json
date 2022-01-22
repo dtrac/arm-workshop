@@ -1,19 +1,50 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {},
+    "parameters": {
+        "storageAccountPrefix": {
+           "type": "string",
+           "defaultValue": "dant",
+           "maxLength": 4,
+           "metadata": {
+                "description": "Storage Account Name Prefix"
+            }
+        },
+        "accountType": {
+            "type": "string",
+            "defaultValue": "Standard_LRS",
+            "allowedValues": [
+                "Standard_LRS",
+                "Premium_LRS",
+                "Standard_RAGRS"
+            ],
+            "metadata": {
+                "description": "Storage Account Type"
+            }
+        }
+    },
     "functions": [],
-    "variables": {},
+    "variables": {
+        "storageAccount": "[toLower(concat(parameters('storageAccountPrefix'), uniqueString(resourceGroup().id)))]"
+    },
     "resources": [
         {
-            "name": "dantsa0123958573",
+            "name": "[variables('storageAccount')]",
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2015-06-15",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "saName": "[variables('storageAccount')]"
+            },
             "properties": {
-                "accountType": "Standard_LRS"
+                "accountType": "[parameters('accountType')]"
             }
         }
     ],
-    "outputs": {}
+    "outputs": {
+        "storageAccountName": {
+           "type": "string",
+           "value": "[variables('storageAccount')]"
+        }
+    }
 }
