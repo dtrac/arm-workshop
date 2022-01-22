@@ -6,10 +6,13 @@
     "variables": {},
     "resources": [
         {
-            "name": "dantsa0123958573",
+            "name": "dantsa0129847566",
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2015-06-15",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "displayName": "dantsa0129847566"
+            },
             "properties": {
                 "accountType": "Standard_LRS"
             }
